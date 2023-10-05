@@ -17,6 +17,7 @@ public class Aquarium {
     @GeneratedValue(strategy = GenerationType.UUID)
     @Column(name = "id", nullable = false)
     private UUID id;
+
     @ManyToMany
     private List<Fish> fishList;
 
