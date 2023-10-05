@@ -12,7 +12,7 @@ public interface FishDao {
 
     Fish getById(Long id);
 
-    void update(Fish fish);
+    void update(Long id, Fish fish);
 
     void deleteById(Long id);
 }
