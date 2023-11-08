@@ -33,10 +33,4 @@ public class Aquarist {
 
     @OneToMany(mappedBy = "owner")
     private List<Aquarium> aquariums;
-
-    @ElementCollection
-    @CollectionTable(name = "aquarium_fish_population")
-    @MapKeyJoinColumn(name = "fish_id")
-    @Column(name = "population_count")
-    private Map<Fish, Integer> population;
 }
