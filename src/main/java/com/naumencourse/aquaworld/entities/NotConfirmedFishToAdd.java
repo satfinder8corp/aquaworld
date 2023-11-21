@@ -1,22 +1,17 @@
 package com.naumencourse.aquaworld.entities;
 
 import jakarta.persistence.*;
-import lombok.*;
-import org.hibernate.annotations.Cascade;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
-
-import java.util.ArrayList;
-import java.util.List;
 import java.util.UUID;
 
-
+@Entity
 @Getter
 @Setter
 @NoArgsConstructor
-@AllArgsConstructor
-@Entity
-@Table(name = "fishes")
-public class Fish {
+public class NotConfirmedFishToAdd {
 
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)

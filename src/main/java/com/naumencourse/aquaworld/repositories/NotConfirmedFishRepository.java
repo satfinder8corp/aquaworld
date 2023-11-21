@@ -5,6 +5,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.UUID;
 
-public interface FishRepository extends JpaRepository<Fish, UUID> {
-    public Fish findFishByName(String name);
+public abstract class NotConfirmedFishRepository implements JpaRepository<Fish, UUID> {
 }

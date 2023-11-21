@@ -1,10 +1,12 @@
 package com.naumencourse.aquaworld.entities;
 
+import com.naumencourse.aquaworld.mapper.FishWikiRequestMapperImpl;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.time.LocalDateTime;
 import java.util.*;
 
 @Entity
@@ -13,24 +15,34 @@ import java.util.*;
 @Setter
 @NoArgsConstructor
 public class Aquarist {
+
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
-    private UUID AquaristId;
+    private UUID id;
 
-    private String  username;
+    // имя пользователя
+    private String  name;
 
+    // электронный почтовый адрес пользователя
     @Column(unique = true)
     private String email;
 
+    // пароль пользователя
     private String password;
 
-    private Date dateOfRegistry;
+    // дата регистрации пользователя в системе
+    private LocalDateTime dateOfRegistry;
 
-    @ElementCollection(targetClass = Role.class, fetch = FetchType.EAGER)
-    @CollectionTable(name = "aquarist_role", joinColumns = @JoinColumn(name = "aquarist_id"))
-    @Enumerated(EnumType.STRING)
-    private Set<Role> role = new HashSet<>();
+//     //набор ролей пользователя
+//    @ElementCollection(targetClass = Role.class, fetch = FetchType.EAGER)
+//    @CollectionTable(name = "aquarist_role", joinColumns = @JoinColumn(name = "aquarist_id"))
+//    @Enumerated(EnumType.STRING)
+//    private Set<Role> role = new HashSet<>();
 
-    @OneToMany(mappedBy = "owner")
-    private List<Aquarium> aquariums;
+//    // список аквариумов, созданных пользователем
+//    @OneToMany(cascade = CascadeType.ALL, mappedBy = "owner")
+//    private List<Aquarium> aquariums;
+
+//    @OneToMany(mappedBy = "author")
+//    private List<FishWikiRequest> requests;
 }
