@@ -24,7 +24,8 @@ public class AquaristServiceImpl implements AquaristService {
            throw new AquaristAlreadyExist("Пользователь с таким адресом почты уже зарегистрирован");
         }
         aquarist.setDateOfRegistry(LocalDateTime.now());
-        return aquaristMapper.aquarstToAquaristDTO(aquaristRepository.save(aquarist));
+//        aquarist.setAquariums(null);
+        return aquaristMapper.aquaristToAquaristDTO(aquaristRepository.save(aquarist));
     }
 
     public List<AquaristDTO> getAll() throws AquaristNotFoundException {
@@ -32,7 +33,7 @@ public class AquaristServiceImpl implements AquaristService {
         if (aquaristList.isEmpty()) {
             throw new AquaristNotFoundException("Не найден ни один пользователь");
         }
-        return aquaristList.stream().map(aquaristMapper::aquarstToAquaristDTO).toList();
+        return aquaristList.stream().map(aquaristMapper::aquaristToAquaristDTO).toList();
     }
 }
 

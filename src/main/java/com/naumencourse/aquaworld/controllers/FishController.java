@@ -5,7 +5,6 @@ import com.naumencourse.aquaworld.entities.Fish;
 import com.naumencourse.aquaworld.exceptions.FishAlreadyExist;
 import com.naumencourse.aquaworld.exceptions.FishNotFoundException;
 import com.naumencourse.aquaworld.services.FishServiceImpl;
-import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -35,6 +34,7 @@ public class FishController {
 
     @PostMapping(value = "/add"
             , produces = MediaType.APPLICATION_JSON_VALUE
+            , consumes = MediaType.APPLICATION_JSON_VALUE
     )
     public ResponseEntity createFish(@RequestBody Fish fishToAdd) {
         try {

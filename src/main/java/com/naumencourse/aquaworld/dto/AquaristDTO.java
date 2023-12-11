@@ -1,5 +1,6 @@
 package com.naumencourse.aquaworld.dto;
 
+import com.naumencourse.aquaworld.entities.Aquarium;
 import com.naumencourse.aquaworld.entities.FishWikiRequest;
 import com.naumencourse.aquaworld.entities.Role;
 import lombok.Getter;
@@ -18,7 +19,7 @@ public class AquaristDTO {
     private String password;
     private LocalDateTime dateOfRegistry;
 //    private Set<Role> role = new HashSet<>();
-//    private List<Aquarium> aquariums;
+    private List<Aquarium> aquariums;
 //    private List<FishWikiRequest> requests;
 
 }

@@ -13,14 +13,15 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping(WebConstant.VERSION_URL + "/aquarist")
+@RequestMapping(value = WebConstant.VERSION_URL + "/aquarist"
+//        , produces = MediaType.APPLICATION_JSON_VALUE
+//        , consumes = MediaType.APPLICATION_JSON_VALUE
+)
 public class AquaristController {
 
     private final AquaristServiceImpl aquaristService;
 
-    @PostMapping(value = "/add"
-            , produces = MediaType.APPLICATION_JSON_VALUE
-    )
+    @PostMapping
     public ResponseEntity createAquarist(@RequestBody Aquarist aquarist) {
         try {
             return ResponseEntity.status(HttpStatus.CREATED)
@@ -34,7 +35,7 @@ public class AquaristController {
         }
     }
 
-    @GetMapping(value = "/list")
+    @GetMapping
     public ResponseEntity getAquarists() {
         try {
             return ResponseEntity.status(HttpStatus.OK).body(aquaristService.getAll());

@@ -6,5 +6,5 @@ import org.mapstruct.Mapper;
 
 @Mapper(componentModel = "spring")
 public interface AquaristMapper {
-    AquaristDTO aquarstToAquaristDTO(Aquarist aquarist);
+    AquaristDTO aquaristToAquaristDTO(Aquarist aquarist);
 }
