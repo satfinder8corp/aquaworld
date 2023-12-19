@@ -13,12 +13,10 @@ import java.util.*;
 public class AquaristDTO {
 
     private UUID id;
-    private String  name;
+    private String name;
     private String email;
-    private String password;
     private LocalDateTime dateOfRegistry;
 //    private Set<Role> role = new HashSet<>();
 //    private List<Aquarium> aquariums;
 //    private List<FishWikiRequest> requests;
-
 }

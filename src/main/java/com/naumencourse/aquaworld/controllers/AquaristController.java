@@ -18,24 +18,24 @@ public class AquaristController {
 
     private final AquaristServiceImpl aquaristService;
 
-    @PostMapping(value = "/add"
-            , produces = MediaType.APPLICATION_JSON_VALUE
+    @PostMapping(value = "/add",
+            produces = MediaType.APPLICATION_JSON_VALUE
     )
-    public ResponseEntity createAquarist(@RequestBody Aquarist aquarist) {
+    public ResponseEntity<?> createAquarist(@RequestBody Aquarist aquarist) {
         try {
             return ResponseEntity.status(HttpStatus.CREATED)
                     .body(aquaristService.createAquarist(aquarist));
         } catch (AquaristAlreadyExist aquaristAlreadyExist) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST)
                     .body(aquaristAlreadyExist.getMessage());
-        }catch (Exception e) {
+        } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST)
                     .body("Ошибка добавления пользователя");
         }
     }
 
     @GetMapping(value = "/list")
-    public ResponseEntity getAquarists() {
+    public ResponseEntity<?>  getAquarists() {
         try {
             return ResponseEntity.status(HttpStatus.OK).body(aquaristService.getAll());
         } catch (AquaristNotFoundException aquaristNotFoundException) {
