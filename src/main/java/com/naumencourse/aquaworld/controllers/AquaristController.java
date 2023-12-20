@@ -18,10 +18,8 @@ public class AquaristController {
 
     private final AquaristServiceImpl aquaristService;
 
-    @PostMapping(value = "/add",
-            produces = MediaType.APPLICATION_JSON_VALUE
-    )
-    public ResponseEntity<?> createAquarist(@RequestBody Aquarist aquarist) {
+    @PostMapping
+    public ResponseEntity createAquarist(@RequestBody Aquarist aquarist) {
         try {
             return ResponseEntity.status(HttpStatus.CREATED)
                     .body(aquaristService.createAquarist(aquarist));
@@ -34,13 +32,13 @@ public class AquaristController {
         }
     }
 
-    @GetMapping(value = "/list")
-    public ResponseEntity<?>  getAquarists() {
+    @GetMapping
+    public ResponseEntity getAquarists() {
         try {
             return ResponseEntity.status(HttpStatus.OK).body(aquaristService.getAll());
         } catch (AquaristNotFoundException aquaristNotFoundException) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST)
-                    .body(aquaristNotFoundException);
+                    .body(aquaristNotFoundException.getMessage());
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST)
                     .body("Ошибка отображения списка пользователя");

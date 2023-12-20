@@ -1,5 +1,6 @@
 package com.naumencourse.aquaworld.entities;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -11,6 +12,7 @@ import java.util.UUID;
 @Getter
 @Setter
 @NoArgsConstructor
+@AllArgsConstructor
 @Entity
 @Table(name = "aquariums")
 public class Aquarium {
@@ -27,10 +29,11 @@ public class Aquarium {
     private Boolean isSaltWater;
 
     // список рыбок в аквариуме с кол-вом особей каждого вида
-    @ElementCollection
-    private Map<Fish, Integer> population = new HashMap<>();
+//    @ElementCollection
+//    private Map<Fish, Integer> population = new HashMap<>();
 
     // владелец аквариума
+    @JsonBackReference
     @ManyToOne
     @JoinColumn (name = "aquarist_id")
     private Aquarist owner;

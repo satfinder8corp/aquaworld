@@ -1,5 +1,7 @@
 package com.naumencourse.aquaworld.entities;
 
+//import com.naumencourse.aquaworld.mapper.FishWikiRequestMapperImpl;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -38,9 +40,12 @@ public class Aquarist {
 //    @Enumerated(EnumType.STRING)
 //    private Set<Role> role = new HashSet<>();
 
-//    // список аквариумов, созданных пользователем
-//    @OneToMany(cascade = CascadeType.ALL, mappedBy = "owner")
-//    private List<Aquarium> aquariums;
+    // список аквариумов, созданных пользователем
+    @JsonManagedReference
+    @OneToMany(cascade = CascadeType.ALL
+            , mappedBy = "owner"
+    )
+    private List<Aquarium> aquariums;
 
 //    @OneToMany(mappedBy = "author")
 //    private List<FishWikiRequest> requests;
