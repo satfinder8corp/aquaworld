@@ -3,8 +3,15 @@ package com.naumencourse.aquaworld.repositories;
 import com.naumencourse.aquaworld.entities.Fish;
 import org.springframework.data.jpa.repository.JpaRepository;
 
+import java.util.List;
 import java.util.UUID;
 
 public interface FishRepository extends JpaRepository<Fish, UUID> {
-    public Fish findFishByName(String name);
+    List<Fish> findByIsConfirmFalse();
+
+    List<Fish> findByIsConfirmTrue();
+    Fish findFishByName(String name);
+
+    boolean existsByName(String name);
+    void deleteByName(String name);
 }

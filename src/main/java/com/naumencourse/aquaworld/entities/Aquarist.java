@@ -1,6 +1,5 @@
 package com.naumencourse.aquaworld.entities;
 
-//import com.naumencourse.aquaworld.mapper.FishWikiRequestMapperImpl;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

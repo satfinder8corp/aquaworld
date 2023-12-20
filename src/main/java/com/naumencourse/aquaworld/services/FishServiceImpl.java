@@ -11,6 +11,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 @Service
@@ -25,38 +26,54 @@ public class FishServiceImpl implements FishService {
     @Override
     public FishDTO create(Fish fish) throws FishAlreadyExist {
         if (fishRepository.findFishByName(fish.getName()) != null) {
-            throw new FishAlreadyExist("Рыбка " + fish.getName() + " уже есть в Wiki");
+            throw new FishAlreadyExist("Рыбка " + fish.getName() + " уже есть в Wiki.");
         }
         return fishMapper.FishToFishDTO(fishRepository.save(fish));
-    }
-
-    @Override
-    public Fish getById(Long fishId) {
-        return null;
-    }
-
-    @Override
-    public Fish update(Fish fish) {
-        return null;
     }
 
     @Override
     public UUID deleteByName(String name) throws FishNotFoundException {
         Fish fish = fishRepository.findFishByName(name);
         if (fish == null) {
-            throw new FishNotFoundException("Рыбка по имени " + name + " не найдена в Wiki");
+            throw new FishNotFoundException("Рыбка по имени " + name + " не найдена.");
         }
         fishRepository.delete(fish);
         return fish.getId();
     }
 
     @Override
-    public List<FishDTO> getAll() throws FishNotFoundException {
-        List<Fish> fishList = fishRepository.findAll();
+    public List<FishDTO> getAllConfirmed() throws FishNotFoundException {
+        List<Fish> fishList = fishRepository.findByIsConfirmTrue();
         if (fishList.isEmpty()) {
-            throw new FishNotFoundException("Wiki пуста - рыбок нет");
+            throw new FishNotFoundException("Рыбок нет.");
         }
         return fishList.stream().map(fishMapper::FishToFishDTO).toList();
     }
 
+    @Override
+    public List<FishDTO> getAllUnconfirmed() throws FishNotFoundException {
+        List<Fish> fishList = fishRepository.findByIsConfirmTrue();
+        if (fishList.isEmpty()) {
+            throw new FishNotFoundException("Рыбок, ожидающих подтверждение, не найдено.");
+        }
+        return fishList.stream().map(fishMapper::FishToFishDTO).toList();
+    }
+    @Override
+    public FishDTO confirmFish(String name) throws FishNotFoundException {
+        Fish fish = fishRepository.findFishByName(name);
+        if (fish == null) {
+            throw new FishNotFoundException("Рыбок, ожидающих подтверждение, не найдено.");
+        }
+        fish.setIsConfirm(true);
+        return fishMapper.FishToFishDTO(fishRepository.save(fish));
+    }
+    @Override
+    public String deleteUnconfirmedFish(String name) throws FishNotFoundException {
+
+        if (fishRepository.existsByName(name)) {
+            fishRepository.deleteByName(name);
+            return name;
+        }
+        throw new FishNotFoundException("Рыбка c именем" + name + " не найдена.");
+    }
 }

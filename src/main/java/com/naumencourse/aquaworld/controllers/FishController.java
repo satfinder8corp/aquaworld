@@ -19,12 +19,11 @@ public class FishController {
 
     private final FishServiceImpl fishService;
 
-    // получение списка всех рыбок, созданных в Wiki
-    @GetMapping(value =  "/list"
-            , produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity getFishes() {
+    @GetMapping(value =  "/list",
+            produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<?> getConfirmFishes() {
         try {
-            return ResponseEntity.status(HttpStatus.OK).body(fishService.getAll());
+            return ResponseEntity.status(HttpStatus.OK).body(fishService.getAllConfirmed());
         } catch (FishNotFoundException fishNotFoundException) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST)
                     .body(fishNotFoundException.getMessage());
@@ -33,10 +32,12 @@ public class FishController {
         }
     }
 
-    @PostMapping(value = "/add"
-            , produces = MediaType.APPLICATION_JSON_VALUE
+
+
+    @PostMapping(value = "/add",
+            produces = MediaType.APPLICATION_JSON_VALUE
     )
-    public ResponseEntity createFish(@RequestBody Fish fishToAdd) {
+    public ResponseEntity<?> createFish(@RequestBody Fish fishToAdd) {
         try {
             return ResponseEntity.status(HttpStatus.CREATED)
                     .body(fishService.create(fishToAdd));
@@ -46,20 +47,6 @@ public class FishController {
         }catch (Exception e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST)
                     .body("Неизвестная ошибка добавления рыбки: " + fishToAdd.getName());
-        }
-    }
-
-    @DeleteMapping(value = "/delete/{name}"
-            , produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity deleteByName(@PathVariable(name = "name") String name) {
-        try {
-            return ResponseEntity.status(HttpStatus.OK).body(fishService.deleteByName(name));
-        } catch (FishNotFoundException fishNotFoundException) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
-                    .body(fishNotFoundException.getMessage());
-        }catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
-                    .body("Ошибка удаления рыбки: " + name);
         }
     }
 }

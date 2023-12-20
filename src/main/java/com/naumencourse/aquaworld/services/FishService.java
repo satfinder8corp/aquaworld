@@ -12,12 +12,13 @@ public interface FishService {
 
     FishDTO create(Fish fish) throws FishAlreadyExist;
 
-    Fish getById(Long fishId);
+    UUID deleteByName(String name) throws FishNotFoundException;
 
-    Fish update(Fish fish);
+    List<FishDTO> getAllConfirmed() throws FishNotFoundException;
 
-    List<FishDTO> getAll() throws FishNotFoundException;
+    List<FishDTO> getAllUnconfirmed() throws FishNotFoundException;
 
-    public UUID deleteByName(String name) throws FishNotFoundException;
+    FishDTO confirmFish(String name) throws FishNotFoundException;
 
+    String deleteUnconfirmedFish(String name) throws FishNotFoundException;
 }

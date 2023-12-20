@@ -2,11 +2,7 @@ package com.naumencourse.aquaworld.entities;
 
 import jakarta.persistence.*;
 import lombok.*;
-import org.hibernate.annotations.Cascade;
 
-
-import java.util.ArrayList;
-import java.util.List;
 import java.util.UUID;
 
 
