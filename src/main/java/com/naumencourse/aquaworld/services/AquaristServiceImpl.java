@@ -24,7 +24,6 @@ public class AquaristServiceImpl implements AquaristService {
            throw new AquaristAlreadyExist("Пользователь с таким адресом почты уже зарегистрирован");
         }
         aquarist.setDateOfRegistry(LocalDateTime.now());
-//        aquarist.setAquariums(null);
         return aquaristMapper.aquaristToAquaristDTO(aquaristRepository.save(aquarist));
     }
 

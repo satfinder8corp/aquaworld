@@ -13,10 +13,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping(value = WebConstant.VERSION_URL + "/aquarist"
-//        , produces = MediaType.APPLICATION_JSON_VALUE
-//        , consumes = MediaType.APPLICATION_JSON_VALUE
-)
+@RequestMapping(value = WebConstant.VERSION_URL + "/aquarist")
 public class AquaristController {
 
     private final AquaristServiceImpl aquaristService;
@@ -41,7 +38,7 @@ public class AquaristController {
             return ResponseEntity.status(HttpStatus.OK).body(aquaristService.getAll());
         } catch (AquaristNotFoundException aquaristNotFoundException) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST)
-                    .body(aquaristNotFoundException);
+                    .body(aquaristNotFoundException.getMessage());
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST)
                     .body("Ошибка отображения списка пользователя");
