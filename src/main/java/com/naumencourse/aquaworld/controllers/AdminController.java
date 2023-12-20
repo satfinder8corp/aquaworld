@@ -9,14 +9,15 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.UUID;
+
 @RestController
 @RequiredArgsConstructor
 @RequestMapping(WebConstant.VERSION_URL + "/admin/fish")
 public class AdminController {
     private final FishServiceImpl fishService;
 
-    @GetMapping(value = "/list",
-            produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<?> getUnconfirmFishes() {
         try {
             return ResponseEntity.status(HttpStatus.OK).body(fishService.getAllUnconfirmed());
@@ -29,9 +30,9 @@ public class AdminController {
     }
 
     @PutMapping("/confirm/{fishId}")
-    public ResponseEntity<?> confirmFish(@PathVariable String name) {
+    public ResponseEntity<?> confirmFish(@PathVariable UUID fishId) {
         try {
-            return ResponseEntity.status(HttpStatus.OK).body(fishService.confirmFish(name));
+            return ResponseEntity.status(HttpStatus.OK).body(fishService.confirmFish(fishId));
         } catch (FishNotFoundException fishNotFoundException) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST)
                     .body(fishNotFoundException.getMessage());

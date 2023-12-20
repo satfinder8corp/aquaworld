@@ -18,7 +18,7 @@ public interface FishService {
 
     List<FishDTO> getAllUnconfirmed() throws FishNotFoundException;
 
-    FishDTO confirmFish(String name) throws FishNotFoundException;
+    FishDTO confirmFish(UUID fishId) throws FishNotFoundException;
 
     String deleteUnconfirmedFish(String name) throws FishNotFoundException;
 }

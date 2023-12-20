@@ -12,6 +12,8 @@ public interface FishRepository extends JpaRepository<Fish, UUID> {
     List<Fish> findByIsConfirmTrue();
     Fish findFishByName(String name);
 
+    Fish findFishById(UUID fishId);
+
     boolean existsByName(String name);
     void deleteByName(String name);
 }

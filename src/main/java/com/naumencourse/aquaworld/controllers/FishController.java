@@ -19,9 +19,8 @@ public class FishController {
 
     private final FishServiceImpl fishService;
 
-    @GetMapping(value =  "/list",
-            produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<?> getConfirmFishes() {
+    @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity getConfirmFishes() {
         try {
             return ResponseEntity.status(HttpStatus.OK).body(fishService.getAllConfirmed());
         } catch (FishNotFoundException fishNotFoundException) {
@@ -34,10 +33,8 @@ public class FishController {
 
 
 
-    @PostMapping(value = "/add",
-            produces = MediaType.APPLICATION_JSON_VALUE
-    )
-    public ResponseEntity<?> createFish(@RequestBody Fish fishToAdd) {
+    @PostMapping(produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity createFish(@RequestBody Fish fishToAdd) {
         try {
             return ResponseEntity.status(HttpStatus.CREATED)
                     .body(fishService.create(fishToAdd));

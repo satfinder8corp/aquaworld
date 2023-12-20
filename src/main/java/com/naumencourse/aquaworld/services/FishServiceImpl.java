@@ -28,6 +28,7 @@ public class FishServiceImpl implements FishService {
         if (fishRepository.findFishByName(fish.getName()) != null) {
             throw new FishAlreadyExist("Рыбка " + fish.getName() + " уже есть в Wiki.");
         }
+        fish.setIsConfirm(false);
         return fishMapper.FishToFishDTO(fishRepository.save(fish));
     }
 
@@ -52,15 +53,15 @@ public class FishServiceImpl implements FishService {
 
     @Override
     public List<FishDTO> getAllUnconfirmed() throws FishNotFoundException {
-        List<Fish> fishList = fishRepository.findByIsConfirmTrue();
+        List<Fish> fishList = fishRepository.findByIsConfirmFalse();
         if (fishList.isEmpty()) {
             throw new FishNotFoundException("Рыбок, ожидающих подтверждение, не найдено.");
         }
         return fishList.stream().map(fishMapper::FishToFishDTO).toList();
     }
     @Override
-    public FishDTO confirmFish(String name) throws FishNotFoundException {
-        Fish fish = fishRepository.findFishByName(name);
+    public FishDTO confirmFish(UUID fishId) throws FishNotFoundException {
+        Fish fish = fishRepository.findFishById(fishId);
         if (fish == null) {
             throw new FishNotFoundException("Рыбок, ожидающих подтверждение, не найдено.");
         }
