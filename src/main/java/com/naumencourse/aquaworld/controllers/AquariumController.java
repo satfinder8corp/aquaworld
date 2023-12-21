@@ -19,7 +19,7 @@ public class AquariumController {
     private final AquariumServiceImpl aquariumServiceImpl;
 
     @PostMapping
-    public ResponseEntity createAquarium(@RequestBody Aquarium aquarium, @RequestParam UUID aquaristID) {
+    public ResponseEntity<?> createAquarium(@RequestBody Aquarium aquarium, @RequestParam UUID aquaristID) {
         try {
             return ResponseEntity.status(HttpStatus.CREATED)
                     .body(aquariumServiceImpl.save(aquarium, aquaristID));
@@ -28,4 +28,10 @@ public class AquariumController {
             return ResponseEntity.badRequest().body("Ошибка добавления аквариума");
         }
     }
+
+    @DeleteMapping("/{aquariumId}")
+    public ResponseEntity<String> deleteAquarium(@PathVariable UUID aquariumId) {
+        return aquariumServiceImpl.delete(aquariumId);
+    }
+
 }

@@ -10,6 +10,7 @@ import com.naumencourse.aquaworld.mapper.AquariumMapper;
 import com.naumencourse.aquaworld.repositories.AquaristRepository;
 import com.naumencourse.aquaworld.repositories.AquariumRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -32,5 +33,14 @@ public class AquariumServiceImpl implements AquariumService {
         }
         aquarium.setOwner(aquarist.get());
         return aquariumRepository.save(aquarium);
+    }
+
+    public ResponseEntity<String> delete(UUID aquariumId) {
+        if (aquariumRepository.existsById(aquariumId)) {
+            aquariumRepository.deleteById(aquariumId);
+            return ResponseEntity.ok("Аквариум с идентификатором '" + aquariumId + "' успешно удален");
+        } else {
+            return ResponseEntity.notFound().build();
+        }
     }
 }
