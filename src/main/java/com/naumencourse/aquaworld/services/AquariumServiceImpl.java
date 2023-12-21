@@ -5,6 +5,8 @@ import com.naumencourse.aquaworld.dto.AquariumDTO;
 import com.naumencourse.aquaworld.entities.Aquarist;
 import com.naumencourse.aquaworld.entities.Aquarium;
 import com.naumencourse.aquaworld.exceptions.AquaristAlreadyExist;
+import com.naumencourse.aquaworld.exceptions.AquariumNotFoundException;
+import com.naumencourse.aquaworld.exceptions.FishNotFoundException;
 import com.naumencourse.aquaworld.mapper.AquaristMapper;
 import com.naumencourse.aquaworld.mapper.AquariumMapper;
 import com.naumencourse.aquaworld.repositories.AquaristRepository;
@@ -35,12 +37,11 @@ public class AquariumServiceImpl implements AquariumService {
         return aquariumRepository.save(aquarium);
     }
 
-    public ResponseEntity<String> delete(UUID aquariumId) {
+    public UUID delete(UUID aquariumId) throws AquariumNotFoundException {
         if (aquariumRepository.existsById(aquariumId)) {
             aquariumRepository.deleteById(aquariumId);
-            return ResponseEntity.ok("Аквариум с идентификатором '" + aquariumId + "' успешно удален");
-        } else {
-            return ResponseEntity.notFound().build();
+            return aquariumId;
         }
+        throw new AquariumNotFoundException("Аквариум c ID " + aquariumId + " не найден.");
     }
 }
