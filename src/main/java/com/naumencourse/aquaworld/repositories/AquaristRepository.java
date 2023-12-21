@@ -8,4 +8,8 @@ import java.util.UUID;
 
 public interface AquaristRepository extends JpaRepository<Aquarist, UUID> {
     Optional<Aquarist> findByEmail(String email);
+
+    Aquarist findAquaristByName(String aquaristName);
+
+    Aquarist findAquaristById(UUID aquaristId);
 }

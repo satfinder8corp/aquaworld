@@ -1,6 +1,7 @@
 package com.naumencourse.aquaworld.controllers;
 
 import com.naumencourse.aquaworld.constants.WebConstant;
+import com.naumencourse.aquaworld.entities.Role;
 import com.naumencourse.aquaworld.exceptions.AquaristNotFoundException;
 import com.naumencourse.aquaworld.exceptions.FishNotFoundException;
 import com.naumencourse.aquaworld.services.AquaristServiceImpl;
@@ -70,6 +71,18 @@ public class AdminController {
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST)
                     .body("Ошибка удаления пользователя с id: " + aquaristId);
+        }
+    }
+
+    @PutMapping("/{aquaristId}")
+    public ResponseEntity updateRole(@PathVariable UUID aquaristId, @RequestParam Role role) {
+        try {
+            return ResponseEntity.status(HttpStatus.OK).body(aquaristService.setRole(aquaristId, role));
+        } catch (AquaristNotFoundException aquaristNotFoundException) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                    .body(aquaristNotFoundException.getMessage());
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Ошибка изменения роли пользователя");
         }
     }
 }
