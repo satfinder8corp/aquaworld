@@ -32,7 +32,7 @@ public class Aquarium {
     @ElementCollection
     @CollectionTable(name = "aquarium_population",
             joinColumns = @JoinColumn(name = "aquarium_id"))
-    private Map<Fish, Integer> population = new HashMap<>();
+    private Map<String, Integer> population = new HashMap<>();
 
     // владелец аквариума
     @JsonBackReference

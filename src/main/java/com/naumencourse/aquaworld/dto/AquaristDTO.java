@@ -1,7 +1,7 @@
 package com.naumencourse.aquaworld.dto;
 
 import com.naumencourse.aquaworld.entities.Aquarium;
-import com.naumencourse.aquaworld.entities.FishWikiRequest;
+//import com.naumencourse.aquaworld.entities.FishWikiRequest;
 import com.naumencourse.aquaworld.entities.Role;
 import lombok.Getter;
 import lombok.Setter;
