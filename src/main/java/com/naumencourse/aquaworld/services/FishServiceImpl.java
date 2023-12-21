@@ -1,6 +1,7 @@
 package com.naumencourse.aquaworld.services;
 
 import com.naumencourse.aquaworld.dto.FishDTO;
+import com.naumencourse.aquaworld.dto.FishWithConfirmFlagDTO;
 import com.naumencourse.aquaworld.entities.Fish;
 import com.naumencourse.aquaworld.exceptions.FishAlreadyExist;
 import com.naumencourse.aquaworld.exceptions.FishNotFoundException;
@@ -11,7 +12,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.UUID;
 
 @Service
@@ -46,7 +46,7 @@ public class FishServiceImpl implements FishService {
     public List<FishDTO> getAllConfirmed() throws FishNotFoundException {
         List<Fish> fishList = fishRepository.findByIsConfirmTrue();
         if (fishList.isEmpty()) {
-            throw new FishNotFoundException("Рыбок нет.");
+            throw new FishNotFoundException("Рыбок нет");
         }
         return fishList.stream().map(fishMapper::FishToFishDTO).toList();
     }
@@ -55,18 +55,18 @@ public class FishServiceImpl implements FishService {
     public List<FishDTO> getAllUnconfirmed() throws FishNotFoundException {
         List<Fish> fishList = fishRepository.findByIsConfirmFalse();
         if (fishList.isEmpty()) {
-            throw new FishNotFoundException("Рыбок, ожидающих подтверждение, не найдено.");
+            throw new FishNotFoundException("Рыбок, ожидающих подтверждение, не найдено");
         }
         return fishList.stream().map(fishMapper::FishToFishDTO).toList();
     }
     @Override
-    public FishDTO confirmFish(UUID fishId) throws FishNotFoundException {
+    public FishWithConfirmFlagDTO confirmFish(UUID fishId) throws FishNotFoundException {
         Fish fish = fishRepository.findFishById(fishId);
         if (fish == null) {
-            throw new FishNotFoundException("Рыбок, ожидающих подтверждение, не найдено.");
+            throw new FishNotFoundException("Рыбка с id = " + fishId + " не найдена в списке на подтверждение");
         }
         fish.setIsConfirm(true);
-        return fishMapper.FishToFishDTO(fishRepository.save(fish));
+        return fishMapper.FishToFishWithConfirmFlagDTO(fishRepository.save(fish));
     }
     @Override
     public String deleteUnconfirmedFish(String name) throws FishNotFoundException {
