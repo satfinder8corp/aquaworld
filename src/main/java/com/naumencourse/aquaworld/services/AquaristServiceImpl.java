@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
@@ -34,5 +35,14 @@ public class AquaristServiceImpl implements AquaristService {
         }
         return aquaristList.stream().map(aquaristMapper::aquaristToAquaristDTO).toList();
     }
+
+    public UUID deleteAquaristById(UUID aquaristId) throws AquaristNotFoundException {
+        if (aquaristRepository.findById(aquaristId).isEmpty()) {
+            throw new AquaristNotFoundException("Пользователь с id = " + aquaristId + " не найден");
+        }
+        aquaristRepository.deleteById(aquaristId);
+        return aquaristId;
+    }
+
 }
 
