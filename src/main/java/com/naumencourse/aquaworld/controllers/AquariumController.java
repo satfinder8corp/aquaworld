@@ -3,6 +3,7 @@ package com.naumencourse.aquaworld.controllers;
 import com.naumencourse.aquaworld.constants.WebConstant;
 import com.naumencourse.aquaworld.entities.Aquarist;
 import com.naumencourse.aquaworld.entities.Aquarium;
+import com.naumencourse.aquaworld.exceptions.AquaristAlreadyExist;
 import com.naumencourse.aquaworld.exceptions.AquariumNotFoundException;
 import com.naumencourse.aquaworld.exceptions.FishNotFoundException;
 import com.naumencourse.aquaworld.services.AquariumServiceImpl;
@@ -54,6 +55,19 @@ public class AquariumController {
             return ResponseEntity.badRequest().body(fishNotFoundException.getMessage());
         } catch (Exception e) {
             return ResponseEntity.badRequest().body("Ошибка общая изменения популяции аквариума");
+        }
+    }
+
+    @GetMapping("/{aquaristId}")
+    public ResponseEntity getAllAquariumsAquarist(@PathVariable UUID aquaristId){
+        try{
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(aquariumServiceImpl.getAllAquariums(aquaristId));
+        }catch (AquariumNotFoundException aquariumNotFoundException) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                    .body(aquariumNotFoundException.getMessage());
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                    .body("Ошибка добавления пользователя");
         }
     }
 
