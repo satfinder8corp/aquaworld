@@ -3,6 +3,7 @@ package com.naumencourse.aquaworld.controllers;
 import com.naumencourse.aquaworld.constants.WebConstant;
 import com.naumencourse.aquaworld.entities.Aquarist;
 import com.naumencourse.aquaworld.entities.Aquarium;
+import com.naumencourse.aquaworld.exceptions.AquariumNotFoundException;
 import com.naumencourse.aquaworld.services.AquariumServiceImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -30,8 +31,15 @@ public class AquariumController {
     }
 
     @DeleteMapping("/{aquariumId}")
-    public ResponseEntity<String> deleteAquarium(@PathVariable UUID aquariumId) {
-        return aquariumServiceImpl.delete(aquariumId);
+    public ResponseEntity<?> deleteAquarium(@PathVariable UUID aquariumId) {
+        try {
+            return ResponseEntity.status(HttpStatus.OK)
+                    .body(aquariumServiceImpl.delete(aquariumId));
+        } catch (AquariumNotFoundException aquariumNotFoundException) {
+            return ResponseEntity.badRequest().body(aquariumNotFoundException.getMessage());
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body("Ошибка удаления аквариума");
+        }
     }
 
 }
