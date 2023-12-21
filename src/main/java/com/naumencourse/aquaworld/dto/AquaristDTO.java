@@ -17,7 +17,7 @@ public class AquaristDTO {
     private String name;
     private String email;
     private LocalDateTime dateOfRegistry;
-//    private Set<Role> role = new HashSet<>();
+    private Set<Role> role = new HashSet<>();
     private List<Aquarium> aquariums;
 //    private List<FishWikiRequest> requests;
 }

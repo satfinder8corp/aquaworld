@@ -34,11 +34,11 @@ public class Aquarist {
     // дата регистрации пользователя в системе
     private LocalDateTime dateOfRegistry;
 
-//     //набор ролей пользователя
-//    @ElementCollection(targetClass = Role.class, fetch = FetchType.EAGER)
-//    @CollectionTable(name = "aquarist_role", joinColumns = @JoinColumn(name = "aquarist_id"))
-//    @Enumerated(EnumType.STRING)
-//    private Set<Role> role = new HashSet<>();
+     //набор ролей пользователя
+    @ElementCollection(targetClass = Role.class, fetch = FetchType.EAGER)
+    @CollectionTable(name = "aquarist_role", joinColumns = @JoinColumn(name = "aquarist_id"))
+    @Enumerated(EnumType.STRING)
+    private Set<Role> role = new HashSet<>();
 
     // список аквариумов, созданных пользователем
     @JsonManagedReference

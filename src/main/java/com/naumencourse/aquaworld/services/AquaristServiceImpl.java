@@ -2,6 +2,7 @@ package com.naumencourse.aquaworld.services;
 
 import com.naumencourse.aquaworld.dto.AquaristDTO;
 import com.naumencourse.aquaworld.entities.Aquarist;
+import com.naumencourse.aquaworld.entities.Role;
 import com.naumencourse.aquaworld.exceptions.AquaristAlreadyExist;
 import com.naumencourse.aquaworld.exceptions.AquaristNotFoundException;
 import com.naumencourse.aquaworld.mapper.AquaristMapper;
@@ -25,6 +26,7 @@ public class AquaristServiceImpl implements AquaristService {
            throw new AquaristAlreadyExist("Пользователь с таким адресом почты уже зарегистрирован");
         }
         aquarist.setDateOfRegistry(LocalDateTime.now());
+        aquarist.getRole().add(Role.USER);
         return aquaristMapper.aquaristToAquaristDTO(aquaristRepository.save(aquarist));
     }
 
