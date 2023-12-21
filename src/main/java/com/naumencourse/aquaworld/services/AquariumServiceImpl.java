@@ -6,6 +6,7 @@ import com.naumencourse.aquaworld.entities.Aquarist;
 import com.naumencourse.aquaworld.entities.Aquarium;
 import com.naumencourse.aquaworld.entities.Fish;
 import com.naumencourse.aquaworld.exceptions.AquaristAlreadyExist;
+import com.naumencourse.aquaworld.exceptions.AquaristNotFoundException;
 import com.naumencourse.aquaworld.exceptions.AquariumNotFoundException;
 import com.naumencourse.aquaworld.exceptions.FishNotFoundException;
 import com.naumencourse.aquaworld.mapper.AquaristMapper;
@@ -18,6 +19,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -27,12 +29,12 @@ public class AquariumServiceImpl implements AquariumService {
 
     public final AquariumRepository aquariumRepository;
     public final AquaristRepository aquaristRepository;
-    public final FishRepository fishRepository;
     public final AquariumMapper aquariumMapper;
+    public final FishRepository fishRepository;
 
 
     public Aquarium save(Aquarium aquarium, UUID aquaristId) throws Exception {
-        Optional<Aquarist> aquarist = aquaristRepository.findById(aquaristId);
+        Optional<Aquarist> aquarist = aquaristRepository.findById(aquaristId) ;
         if (!aquarist.isPresent()) {
             throw new Exception("нет такого ID");
         }
@@ -48,6 +50,11 @@ public class AquariumServiceImpl implements AquariumService {
         throw new AquariumNotFoundException("Аквариум c ID " + aquariumId + " не найден.");
     }
 
+    public List<Aquarium> getAllAquariums(UUID aquaristId) throws AquariumNotFoundException, AquaristNotFoundException {
+        Aquarist aquarist = aquaristRepository.findById(aquaristId).orElseThrow(
+                ()-> new AquaristNotFoundException("Не найден пользователь)"));
+        return aquariumRepository.findAllByOwner(aquarist);
+    }
     public Aquarium updatePopulation(UUID aquariumId, UUID fishId, Integer fishCount) throws AquariumNotFoundException, FishNotFoundException {
         Aquarium aquarium = aquariumRepository.findById(aquariumId).orElseThrow(
                 () -> new AquariumNotFoundException("Аквариум c ID " + aquariumId + " не найден."));
@@ -58,5 +65,4 @@ public class AquariumServiceImpl implements AquariumService {
         aquariumRepository.save(aquarium);
         return aquarium;
     }
-
 }
