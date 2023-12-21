@@ -1,6 +1,7 @@
 package com.naumencourse.aquaworld.services;
 
 import com.naumencourse.aquaworld.dto.FishDTO;
+import com.naumencourse.aquaworld.dto.FishWithConfirmFlagDTO;
 import com.naumencourse.aquaworld.entities.Fish;
 import com.naumencourse.aquaworld.exceptions.FishAlreadyExist;
 import com.naumencourse.aquaworld.exceptions.FishNotFoundException;
@@ -18,7 +19,7 @@ public interface FishService {
 
     List<FishDTO> getAllUnconfirmed() throws FishNotFoundException;
 
-    FishDTO confirmFish(UUID fishId) throws FishNotFoundException;
+    FishWithConfirmFlagDTO confirmFish(UUID fishId) throws FishNotFoundException;
 
     String deleteUnconfirmedFish(String name) throws FishNotFoundException;
 }

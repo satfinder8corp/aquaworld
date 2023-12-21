@@ -29,8 +29,10 @@ public class Aquarium {
     private Boolean isSaltWater;
 
     // список рыбок в аквариуме с кол-вом особей каждого вида
-//    @ElementCollection
-//    private Map<Fish, Integer> population = new HashMap<>();
+    @ElementCollection
+    @CollectionTable(name = "aquarium_population",
+            joinColumns = @JoinColumn(name = "aquarium_id"))
+    private Map<Fish, Integer> population = new HashMap<>();
 
     // владелец аквариума
     @JsonBackReference
